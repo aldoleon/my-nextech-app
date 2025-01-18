@@ -1,0 +1,28 @@
+<div class="list-container">
+    <h1>Hacker News</h1>
+    <div>
+      <mat-spinner class="center-content" *ngIf="this.isLoading"></mat-spinner>
+    </div>
+      <div class="form-header">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" class="w3-input"> 
+      </div>
+      <div class="container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort *ngIf="!this.isLoading">
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+          <td  mat-cell *matCellDef="let element">
+            <div *ngIf="element.url !== '' && element.url !== undefined">
+              <a [href]="element.url" target="_blank">{{element.title}}</a>
+            </div>
+            <div *ngIf="element.url === '' || element.url === undefined">
+              {{element.title}}
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+     </div>
+</div>
